@@ -9,9 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "release": "node scripts/create-release.js",
-    "prisma:generate": "prisma generate",
-    "prisma:push": "prisma db push",
-    "prisma:studio": "prisma studio",
+    "prisma:generate": "npx prisma generate",
+    "prisma:push": "npx prisma db push",
+    "prisma:studio": "npx prisma studio",
     "prisma:seed": "node prisma/seed.js"
   },
   "keywords": [],
