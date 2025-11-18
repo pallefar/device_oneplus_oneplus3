@@ -12,9 +12,11 @@ import {
   LogOut,
   Menu,
   X,
-  Download
+  Download,
+  BookOpen
 } from 'lucide-react'
 import { useState } from 'react'
+import { NotificationCenter } from '@/components/features/NotificationCenter'
 
 interface NavItem {
   name: string
@@ -46,6 +48,12 @@ const navItems: NavItem[] = [
     name: 'Progress',
     href: '/progress',
     icon: TrendingUp,
+    roles: ['AGENT'],
+  },
+  {
+    name: 'Learning',
+    href: '/learning',
+    icon: BookOpen,
     roles: ['AGENT'],
   },
   {
@@ -115,6 +123,7 @@ export function Navigation() {
           </div>
 
           <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
+            <NotificationCenter />
             <div className="text-sm text-gray-700">
               <span className="font-medium">{session.user?.name}</span>
               <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">

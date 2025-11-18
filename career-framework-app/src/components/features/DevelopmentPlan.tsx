@@ -14,6 +14,7 @@ import {
   Download,
   Sparkles,
 } from 'lucide-react'
+import { LearningPath } from './LearningPath'
 
 interface DevelopmentPlanProps {
   assignmentId: string
@@ -222,6 +223,18 @@ export function DevelopmentPlan({ assignmentId }: DevelopmentPlanProps) {
                 ))}
               </div>
             </Card>
+
+            {/* Learning Resources */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Recommended Learning Resources</h3>
+              <LearningPath
+                skills={plan.skillGaps.map((gap: any) => ({
+                  name: gap.skill,
+                  rating: gap.managerRating,
+                  priority: gap.priority,
+                }))}
+              />
+            </div>
           </div>
         )}
       </Modal>
