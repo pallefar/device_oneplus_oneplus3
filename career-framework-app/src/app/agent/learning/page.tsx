@@ -3,16 +3,22 @@
 import { useState, useEffect } from 'react'
 import { Navigation } from '@/components/layout/Navigation'
 import { LearningPath } from '@/components/features/LearningPath'
+import { LearningGoalModal } from '@/components/features/LearningGoalModal'
 import { Loading } from '@/components/ui/Loading'
 import { Card } from '@/components/ui/Card'
-import { BookOpen, TrendingUp, Target } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
+import { BookOpen, TrendingUp, Target, Plus, CheckCircle, Calendar, Edit, Trash2 } from 'lucide-react'
 
 export default function LearningPage() {
   const [loading, setLoading] = useState(true)
   const [skills, setSkills] = useState<any[]>([])
+  const [goals, setGoals] = useState<any[]>([])
+  const [isGoalModalOpen, setIsGoalModalOpen] = useState(false)
+  const [selectedGoal, setSelectedGoal] = useState<any>(null)
 
   useEffect(() => {
     fetchSkillData()
+    fetchGoals()
   }, [])
 
   const fetchSkillData = async () => {
@@ -41,6 +47,63 @@ export default function LearningPage() {
     }
   }
 
+  const fetchGoals = async () => {
+    try {
+      const response = await fetch('/api/learning-goals')
+      if (response.ok) {
+        const data = await response.json()
+        setGoals(data.goals || [])
+      }
+    } catch (error) {
+      console.error('Failed to fetch goals:', error)
+    }
+  }
+
+  const handleUpdateGoalProgress = async (goalId: string, progress: number) => {
+    try {
+      const response = await fetch(`/api/learning-goals/${goalId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ progress }),
+      })
+      if (response.ok) {
+        fetchGoals()
+      }
+    } catch (error) {
+      console.error('Failed to update goal:', error)
+    }
+  }
+
+  const handleCompleteGoal = async (goalId: string) => {
+    try {
+      const response = await fetch(`/api/learning-goals/${goalId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'completed', progress: 100 }),
+      })
+      if (response.ok) {
+        fetchGoals()
+      }
+    } catch (error) {
+      console.error('Failed to complete goal:', error)
+    }
+  }
+
+  const handleDeleteGoal = async (goalId: string) => {
+    if (!confirm('Are you sure you want to delete this goal?')) return
+
+    try {
+      const response = await fetch(`/api/learning-goals/${goalId}`, {
+        method: 'DELETE',
+      })
+      if (response.ok) {
+        fetchGoals()
+      }
+    } catch (error) {
+      console.error('Failed to delete goal:', error)
+    }
+  }
+
   const calculatePriority = (rating: number, trend: number): number => {
     // Higher priority for lower ratings and negative trends
     const ratingFactor = (5 - rating) * 2
@@ -62,14 +125,80 @@ export default function LearningPage() {
       <Navigation />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <BookOpen className="w-8 h-8 text-blue-600" />
-            <h1 className="text-3xl font-bold text-gray-900">Learning Resources</h1>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-3">
+              <BookOpen className="w-8 h-8 text-blue-600" />
+              <h1 className="text-3xl font-bold text-gray-900">Learning & Goals</h1>
+            </div>
+            <Button onClick={() => { setSelectedGoal(null); setIsGoalModalOpen(true); }}>
+              <Plus className="w-4 h-4 mr-2" />
+              New Goal
+            </Button>
           </div>
           <p className="text-sm text-gray-600">
-            Curated learning resources tailored to your skill development needs
+            Track your learning goals and discover resources tailored to your development needs
           </p>
         </div>
+
+        {/* Learning Goals Section */}
+        {goals.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">My Learning Goals</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {goals.filter(g => g.status !== 'abandoned').map((goal: any) => (
+                <Card key={goal.id}>
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900">{goal.title}</h3>
+                      {goal.description && (
+                        <p className="text-sm text-gray-600 mt-1">{goal.description}</p>
+                      )}
+                    </div>
+                    <div className="flex gap-1 ml-2">
+                      <button onClick={() => { setSelectedGoal(goal); setIsGoalModalOpen(true); }} className="p-1 text-blue-600 hover:bg-blue-50 rounded">
+                        <Edit className="w-4 h-4" />
+                      </button>
+                      <button onClick={() => handleDeleteGoal(goal.id)} className="p-1 text-red-600 hover:bg-red-50 rounded">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm mb-1">
+                      <span className="text-gray-600">Progress</span>
+                      <span className="font-medium text-blue-600">{goal.progress}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-blue-600 h-2 rounded-full transition-all" style={{ width: `${goal.progress}%` }}></div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
+                    {goal.targetDate && (
+                      <div className="flex items-center gap-1 text-xs text-gray-600">
+                        <Calendar className="w-3 h-3" />
+                        {new Date(goal.targetDate).toLocaleDateString()}
+                      </div>
+                    )}
+                    {goal.status === 'active' && goal.progress < 100 && (
+                      <Button onClick={() => handleCompleteGoal(goal.id)} variant="ghost" className="text-xs">
+                        <CheckCircle className="w-3 h-3 mr-1" />
+                        Complete
+                      </Button>
+                    )}
+                    {goal.status === 'completed' && (
+                      <span className="text-xs text-green-600 font-medium flex items-center gap-1">
+                        <CheckCircle className="w-3 h-3" />
+                        Completed
+                      </span>
+                    )}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
 
         {skills.length === 0 ? (
           <Card>
@@ -133,6 +262,13 @@ export default function LearningPage() {
           </>
         )}
       </div>
+
+      <LearningGoalModal
+        isOpen={isGoalModalOpen}
+        onClose={() => setIsGoalModalOpen(false)}
+        goal={selectedGoal}
+        onSuccess={fetchGoals}
+      />
     </div>
   )
 }
