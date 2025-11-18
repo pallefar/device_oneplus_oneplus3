@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Loading } from '@/components/ui/Loading'
+import { GamificationWidget } from '@/components/features/GamificationWidget'
 import Link from 'next/link'
 import {
   Target,
@@ -63,7 +64,9 @@ export function EnhancedAgentDashboard() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Main Content */}
+      <div className="lg:col-span-2 space-y-6">
       {/* Actionable Next Steps */}
       <Card>
         <div className="flex items-center gap-3 mb-4">
@@ -290,6 +293,12 @@ export function EnhancedAgentDashboard() {
             <BookOpen className="w-10 h-10 text-purple-200" />
           </div>
         </Card>
+      </div>
+      </div>
+
+      {/* Gamification Sidebar */}
+      <div className="lg:col-span-1">
+        <GamificationWidget />
       </div>
     </div>
   )

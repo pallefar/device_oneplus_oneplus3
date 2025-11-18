@@ -15,7 +15,8 @@ import {
   Download,
   BookOpen,
   Settings,
-  MessageCircle
+  MessageCircle,
+  Trophy
 } from 'lucide-react'
 import { useState } from 'react'
 import { NotificationCenter } from '@/components/features/NotificationCenter'
@@ -62,6 +63,12 @@ const navItems: NavItem[] = [
     name: 'AI Coach',
     href: '/ai-coach',
     icon: MessageCircle,
+    roles: ['AGENT'],
+  },
+  {
+    name: 'Achievements',
+    href: '/achievements',
+    icon: Trophy,
     roles: ['AGENT'],
   },
   {

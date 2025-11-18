@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { getSystemSetting } from '../../admin/settings/route'
+import { awardXP, checkAICoachAchievements } from '@/lib/gamification'
 
 interface Message {
   role: 'user' | 'assistant' | 'system'
@@ -151,6 +152,8 @@ export async function POST(request: Request) {
     const allMessages = [...messages, { role: 'user', content: message }, { role: 'assistant', content: aiResponse }]
 
     let conversation
+    const isNewConversation = !conversationId
+
     if (conversationId) {
       conversation = await prisma.aIConversation.update({
         where: { id: conversationId },
@@ -167,6 +170,22 @@ export async function POST(request: Request) {
           messages: JSON.stringify(allMessages),
         },
       })
+    }
+
+    // Gamification: Award XP and check achievements for new conversations
+    if (isNewConversation) {
+      try {
+        await awardXP(
+          userId,
+          15,
+          'Started a new AI Career Coach conversation',
+          'learning'
+        )
+        await checkAICoachAchievements(userId)
+      } catch (error) {
+        console.error('Error awarding XP:', error)
+        // Don't fail the request if gamification fails
+      }
     }
 
     return NextResponse.json({
