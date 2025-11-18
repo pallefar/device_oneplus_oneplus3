@@ -1,0 +1,18 @@
+// Add these models to your main schema.prisma file
+
+model AppDownload {
+  id           String   @id @default(cuid())
+  downloadedBy String?  // User ID if logged in
+  ipAddress    String?
+  userAgent    String?
+  downloadedAt DateTime @default(now())
+}
+
+model AppUsage {
+  id        String   @id @default(cuid())
+  userId    String?
+  ipAddress String?
+  action    String   // "login", "framework_created", "assessment_created", etc.
+  metadata  String?  // JSON string for additional data
+  timestamp DateTime @default(now())
+}

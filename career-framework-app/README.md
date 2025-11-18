@@ -32,6 +32,46 @@ A comprehensive web application for managing career frameworks, assessments, and
 - **Styling**: Tailwind CSS
 - **Export**: jsPDF and ExcelJS
 - **Icons**: Lucide React
+- **Distribution**: ZIP download and installation tracking
+
+## Network Access & Distribution
+
+### Running on a Network
+
+The app can be accessed by multiple users on your local network:
+
+1. **Start the server** with network access:
+   ```bash
+   npm run server
+   ```
+
+2. **Share the network URL** shown in the terminal with your team
+
+3. **Team members access** the app from their browsers using the network URL
+
+See [NETWORK-SETUP.md](./NETWORK-SETUP.md) for detailed network configuration.
+
+### Download & Distribute
+
+**Admin users** can download the complete app package:
+
+1. Log in as admin
+2. Navigate to **Downloads** in the navigation menu
+3. Click **Download App Package**
+4. Receive a ZIP file with:
+   - Complete application code
+   - Installation instructions
+   - Setup scripts
+
+This package can be:
+- Shared with team members
+- Installed on multiple computers
+- Placed on a shared network drive
+
+The admin dashboard also tracks:
+- Download history
+- Installation metrics
+- Usage analytics
 
 ## Installation
 
@@ -75,13 +115,26 @@ A comprehensive web application for managing career frameworks, assessments, and
    npm run prisma:seed
    ```
 
-5. **Run the development server**:
+5. **Run the server**:
+
+   **For network access (recommended for teams):**
+   ```bash
+   npm run server
+   ```
+   This will:
+   - Start the server accessible to your network
+   - Automatically open your browser
+   - Display network URL for team members
+
+   **For local development only:**
    ```bash
    npm run dev
    ```
 
-6. **Open your browser**:
-   Navigate to `http://localhost:3000`
+6. **Access the application**:
+   - **Local**: `http://localhost:3000`
+   - **Network**: Use the URL displayed in terminal (e.g., `http://192.168.1.100:3000`)
+   - **Team members**: Share the network URL with your team!
 
 ## Default User Accounts
 

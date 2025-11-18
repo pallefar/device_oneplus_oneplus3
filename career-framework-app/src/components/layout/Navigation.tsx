@@ -11,7 +11,8 @@ import {
   TrendingUp,
   LogOut,
   Menu,
-  X
+  X,
+  Download
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -52,6 +53,12 @@ const navItems: NavItem[] = [
     href: '/analytics',
     icon: TrendingUp,
     roles: ['ADMIN', 'LEADER'],
+  },
+  {
+    name: 'Downloads',
+    href: '/downloads',
+    icon: Download,
+    roles: ['ADMIN'],
   },
 ]
 

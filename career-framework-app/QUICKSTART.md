@@ -32,11 +32,19 @@ npm run prisma:seed
 
 ### 3. Start the Application
 
+**For team/network access (recommended):**
+```bash
+npm run server
+```
+
+**For local development only:**
 ```bash
 npm run dev
 ```
 
-The app will start at `http://localhost:3000`
+The terminal will show:
+- Local URL: `http://localhost:3000`
+- Network URL: `http://192.168.x.x:3000` (share with team)
 
 ### 4. Log In
 
@@ -156,7 +164,8 @@ npm run prisma:seed
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start development server |
+| `npm run server` | **Start with network access (recommended)** |
+| `npm run dev` | Start development server (local only) |
 | `npm run build` | Build for production |
 | `npm run start` | Start production server |
 | `npm run prisma:generate` | Generate Prisma client |
