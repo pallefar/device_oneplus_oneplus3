@@ -5,7 +5,7 @@ import { Navigation } from '@/components/layout/Navigation'
 import { Card } from '@/components/ui/Card'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
-import { Plus, Edit, Eye, Trash2 } from 'lucide-react'
+import { Plus, Edit, Eye, Trash2, FolderTree } from 'lucide-react'
 
 export default async function FrameworksPage() {
   const session = await getServerSession(authOptions)

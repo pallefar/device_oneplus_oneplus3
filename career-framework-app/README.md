@@ -25,32 +25,48 @@ npm run server
 ### For Administrators
 - **Career Framework Management**: Create and manage career frameworks with levels and competencies
 - **Assessment Creation**: Design assessments and assign them to agent-manager pairs
-- **User Management**: Manage users across different roles (Admin, Leader, Agent)
-- **Analytics Dashboard**: View organization-wide skill development metrics
+- **User Management**: Full CRUD interface for managing users across roles (Admin, Leader, Agent)
+- **Advanced Analytics Dashboard**:
+  - Organization-wide metrics and KPIs
+  - Completion trends over time (line charts)
+  - Skill gap analysis (self vs manager ratings)
+  - Competency performance radar charts
+  - Top performers leaderboard
+  - Assignment status distribution
 - **Skill Matrix**: Define and track skills across different competency areas
+- **App Distribution**: Download and track app installations
 
 ### For Leaders/Managers
-- **Assessment Review**: Review and rate employee self-assessments
+- **Assessment Review**: Review and rate employee self-assessments with structured feedback
+- **Team Analytics Dashboard**:
+  - Team-specific performance metrics
+  - Completion rates and trends
+  - Competency radar charts
+  - Skill development areas
+  - Team member rankings
 - **Team Overview**: Track assessment completion and team development
 - **Export Reports**: Generate PDF and Excel reports of assessments
-- **Feedback System**: Provide structured feedback on employee skills
+- **Feedback System**: Provide constructive feedback on employee skills
 
 ### For Agents/Employees
-- **Self-Assessment**: Complete self-assessments on assigned skills
+- **Self-Assessment**: Complete self-assessments on assigned skills with 1-5 rating scale
 - **Progress Tracking**: View personal skill development over time
 - **Career Visibility**: See expectations for each career level
+- **Manager Feedback**: View manager ratings and comments after review
 - **Export Options**: Download personal assessment reports
 
 ## Technology Stack
 
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
-- **Database**: SQLite with Prisma ORM
-- **Authentication**: NextAuth.js with JWT
-- **Styling**: Tailwind CSS
-- **Export**: jsPDF and ExcelJS
+- **Database**: SQLite with Prisma ORM (upgradeable to PostgreSQL)
+- **Authentication**: NextAuth.js with JWT sessions
+- **Styling**: Tailwind CSS 4
+- **Charts & Visualizations**: Recharts (Line, Bar, Pie, Radar charts)
+- **Export**: jsPDF (PDF) and ExcelJS (Excel)
 - **Icons**: Lucide React
-- **Distribution**: ZIP download and installation tracking
+- **Distribution**: ZIP download with installation tracking
+- **Error Handling**: React Error Boundaries
 
 ## Network Access & Distribution
 
@@ -411,16 +427,19 @@ npm install
 
 ## Future Enhancements
 
-- [ ] Skill gap analysis visualization
+- [x] Skill gap analysis visualization ✅
+- [x] Advanced analytics dashboard ✅
+- [x] Historical skill progression charts ✅
 - [ ] Automated development plan generation
 - [ ] Email notifications for pending assessments
 - [ ] Import assessments from Excel
-- [ ] Historical skill progression charts
 - [ ] Multi-language support
 - [ ] Mobile responsive improvements
-- [ ] Advanced analytics dashboard
-- [ ] Batch user import
+- [ ] Batch user import (CSV/Excel)
 - [ ] Custom skill rating scales
+- [ ] Two-way skill comparison (peer reviews)
+- [ ] Assessment templates library
+- [ ] Automated reminders for pending reviews
 
 ## Support
 
