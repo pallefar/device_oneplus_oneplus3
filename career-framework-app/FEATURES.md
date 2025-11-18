@@ -41,7 +41,103 @@ Visual tracking of skill development across multiple assessments over time.
 
 **Access:** Dedicated "Progress" page in agent navigation
 
-### 3. **Advanced Analytics Dashboards** 📊
+### 3. **Learning Path Recommendations** 📚
+Curated external learning resources personalized to individual skill gaps.
+
+**Features:**
+- Database of high-quality courses, books, certifications from trusted providers:
+  - Udemy, Coursera, LinkedIn Learning
+  - O'Reilly, GitHub, Google Certificates
+  - PMI Certifications
+- Intelligent resource matching:
+  - Direct skill name matching
+  - Fuzzy matching with keyword expansion
+  - Partial string matching
+- Level-appropriate filtering (beginner/intermediate/advanced based on current rating)
+- Priority-based organization
+- Skills covered:
+  - Technical: JavaScript, Python, React, Data Analysis, UI/UX
+  - Leadership: Team Management, Communication, Project Management
+  - Soft Skills: Problem Solving, Critical Thinking
+
+**Access:** Dedicated "Learning" page in agent navigation + integrated into Development Plans
+
+### 4. **Notification Center** 🔔
+Real-time notification system with unread tracking.
+
+**Features:**
+- Bell icon in navigation with unread badge
+- Dropdown panel with notification list
+- Notification types:
+  - Assessment assigned
+  - Self-assessment completed (notifies manager)
+  - Manager review completed
+  - Assessment finalized
+  - Skill milestones achieved
+  - Framework updates
+- Mark as read/unread functionality
+- Delete notifications
+- Auto-polling (every 30 seconds)
+- Relative time formatting (e.g., "2h ago", "Just now")
+- Color-coded notification icons
+- Clickable links to related content
+
+**Access:** Navigation bar (all roles)
+
+### 5. **Enhanced Dashboard** ✨
+Personalized career development dashboard with actionable next steps.
+
+**Features:**
+- **Your Next Steps Section:**
+  - Priority-based action cards (orange=urgent, blue=recommended, green=progress, purple=learning)
+  - Pending assessments with due dates
+  - Top skills to develop recommendations
+  - Progress tracking shortcuts
+  - Learning resource access
+- **Top Skills to Develop:**
+  - Visual progress bars
+  - Color-coded ratings (red < 2, orange < 3, yellow >= 3, green >= 4)
+  - Competency grouping
+  - Direct links to learning resources
+- **Recent Achievements:**
+  - Milestone tracking with emoji indicators
+  - Achievement types: First Assessment, Skills Improved, High Performer, Consistent Growth
+  - Date tracking
+- **Quick Stats Cards:**
+  - Assessments completed
+  - Skills improving count
+  - Available learning resources count
+
+**Access:** Agent dashboard (main page after login)
+
+### 6. **Enhanced PDF Exports** 📄
+Professional, branded PDF reports with visual formatting.
+
+**Features:**
+- **Design System:**
+  - Professional header with company branding area
+  - Color-coded elements (blue primary, status colors)
+  - Rounded corner cards and modern typography
+  - Consistent footers with generation date
+- **Summary Page:**
+  - Assessment information box
+  - Statistics cards (skills assessed, avg ratings, alignment gap)
+  - Competency breakdown table with auto-formatting
+- **Detailed Pages:**
+  - Skill cards with visual rating bars
+  - Gap indicators (self vs manager alignment)
+  - Color-coded ratings
+  - Comments sections with proper wrapping
+  - Automated pagination
+- **Technical Features:**
+  - Table-based layouts using jspdf-autotable
+  - Automatic page breaks
+  - Smart layout calculations
+  - Text wrapping for long content
+
+**Access:** Export buttons in assessment views
+
+### 7. **Advanced Analytics Dashboards** 📊
 
 #### Admin Analytics
 - Organization-wide metrics and KPIs
