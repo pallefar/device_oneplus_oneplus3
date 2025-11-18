@@ -27,6 +27,7 @@
     "archiver": "^7.0.1",
     "autoprefixer": "^10.4.22",
     "bcryptjs": "^3.0.3",
+    "date-fns": "^4.1.0",
     "exceljs": "^4.4.0",
     "ip": "^2.0.1",
     "jspdf": "^3.0.3",
