@@ -49,6 +49,7 @@ const excludePaths = [
   'dist',
   'build',
   'career-framework-app-release.zip',
+  'career-framework-app',  // Exclude any nested subdirectory
   '.gitignore'
 ];
 
@@ -69,10 +70,10 @@ for (const file of files) {
 
   if (stat.isDirectory()) {
     console.log(`📂 Adding directory: ${file}/`);
-    archive.directory(filePath, `career-framework-app/${file}`);
+    archive.directory(filePath, file);
   } else {
     console.log(`📄 Adding file: ${file}`);
-    archive.file(filePath, { name: `career-framework-app/${file}` });
+    archive.file(filePath, { name: file });
   }
 }
 
@@ -86,9 +87,34 @@ Release Date: ${new Date().toLocaleDateString()}
 
 Thank you for downloading the Career Framework App!
 
-QUICK START:
-============
+QUICK START (EASIEST METHOD):
+=============================
 
+Windows Users:
+1. Extract this ZIP file to your desired location
+2. Double-click "start-server.bat"
+3. The script will automatically:
+   - Check if Node.js is installed
+   - Install dependencies if needed
+   - Set up the database
+   - Start the server
+4. Browser will open automatically!
+
+Mac/Linux Users:
+1. Extract this ZIP file to your desired location
+2. Open Terminal in the extracted folder
+3. Run: ./start-server.sh
+4. The script will automatically:
+   - Check if Node.js is installed
+   - Install dependencies if needed
+   - Set up the database
+   - Start the server
+5. Browser will open automatically!
+
+MANUAL INSTALLATION:
+====================
+
+If you prefer manual setup:
 1. Extract this ZIP file to your desired location
 2. Open terminal/command prompt in the extracted folder
 3. Run: npm install
@@ -287,7 +313,7 @@ Installation Date: ${new Date().toLocaleString()}
 Enjoy using the Career Framework App! 🚀
 `;
 
-archive.append(installInstructions, { name: 'career-framework-app/INSTALL.txt' });
+archive.append(installInstructions, { name: 'INSTALL.txt' });
 
 // Add release notes
 const releaseNotes = `
@@ -451,7 +477,7 @@ the documentation or contact your system administrator.
 Happy career tracking! 🚀
 `;
 
-archive.append(releaseNotes, { name: 'career-framework-app/RELEASE-NOTES.txt' });
+archive.append(releaseNotes, { name: 'RELEASE-NOTES.txt' });
 
 // Finalize the archive
 console.log('\n📦 Finalizing package...\n');
