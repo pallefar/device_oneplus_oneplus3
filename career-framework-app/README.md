@@ -49,8 +49,33 @@ npm run server
 - **Feedback System**: Provide constructive feedback on employee skills
 
 ### For Agents/Employees
+- **Enhanced Dashboard**: Personalized career development dashboard with:
+  - Actionable next steps based on current status
+  - Priority-based action cards (pending assessments, skill development, learning)
+  - Top skills to develop with visual progress bars
+  - Recent achievements and milestones
+  - Quick stats (completed assessments, improving skills, available resources)
 - **Self-Assessment**: Complete self-assessments on assigned skills with 1-5 rating scale
-- **Progress Tracking**: View personal skill development over time
+- **Progress Tracking**: Interactive skill progression charts showing:
+  - Historical skill development across assessments
+  - Self vs manager rating comparisons
+  - Trend indicators (improving, stable, declining)
+  - Assessment history timeline
+- **Learning Path Recommendations**: Curated learning resources with:
+  - Personalized course recommendations based on skill gaps
+  - Resources from Udemy, Coursera, LinkedIn Learning, O'Reilly, etc.
+  - Level-appropriate content (beginner, intermediate, advanced)
+  - Direct links to courses, books, certifications, and practice materials
+- **Development Plans**: AI-powered development plans featuring:
+  - Skill gap analysis and prioritization
+  - Personalized recommendations by competency
+  - Phased timeline (immediate, short-term, medium-term goals)
+  - Downloadable plan in text format
+- **Notification Center**: Real-time notifications for:
+  - New assessments assigned
+  - Manager reviews completed
+  - Assessments finalized
+  - Skill milestones achieved
 - **Career Visibility**: See expectations for each career level
 - **Manager Feedback**: View manager ratings and comments after review
 - **Export Options**: Download personal assessment reports
