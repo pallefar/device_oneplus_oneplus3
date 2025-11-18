@@ -17,7 +17,8 @@ import {
   Settings,
   MessageCircle,
   Trophy,
-  ThumbsUp
+  ThumbsUp,
+  Heart
 } from 'lucide-react'
 import { useState } from 'react'
 import { NotificationCenter } from '@/components/features/NotificationCenter'
@@ -76,6 +77,12 @@ const navItems: NavItem[] = [
     name: 'Endorsements',
     href: '/endorsements',
     icon: ThumbsUp,
+    roles: ['AGENT'],
+  },
+  {
+    name: 'Kudos',
+    href: '/kudos',
+    icon: Heart,
     roles: ['AGENT'],
   },
   {
