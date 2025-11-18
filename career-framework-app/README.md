@@ -2,6 +2,24 @@
 
 A comprehensive web application for managing career frameworks, assessments, and employee skill development. Built with Next.js, TypeScript, Prisma, and SQLite.
 
+## 📥 Download & Quick Start
+
+**Want to get started quickly?**
+
+Generate the release package:
+```bash
+npm run release
+```
+
+Then extract and run:
+```bash
+npm install
+npm run prisma:push && npm run prisma:seed
+npm run server
+```
+
+📖 **For detailed download options, see [DOWNLOAD.md](./DOWNLOAD.md)**
+
 ## Features
 
 ### For Administrators
