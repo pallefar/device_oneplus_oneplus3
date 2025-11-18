@@ -1,0 +1,164 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum Role {
+  ADMIN
+  LEADER
+  AGENT
+}
+
+enum AssessmentStatus {
+  PENDING
+  SELF_COMPLETED
+  MANAGER_COMPLETED
+  FINALIZED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(AGENT)
+  department String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  createdFrameworks     CareerFramework[]
+  createdAssessments    Assessment[]
+  agentAssignments      AssessmentAssignment[] @relation("AgentAssignments")
+  managerAssignments    AssessmentAssignment[] @relation("ManagerAssignments")
+  skillMatrix           SkillMatrix[]
+}
+
+model CareerFramework {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  version     String   @default("1.0")
+  isActive    Boolean  @default(true)
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  createdBy     User          @relation(fields: [createdById], references: [id])
+  levels        Level[]
+  competencies  Competency[]
+  assessments   Assessment[]
+}
+
+model Level {
+  id          String @id @default(cuid())
+  frameworkId String
+  name        String
+  description String?
+  order       Int
+
+  // Relations
+  framework CareerFramework @relation(fields: [frameworkId], references: [id], onDelete: Cascade)
+  skills    Skill[]
+}
+
+model Competency {
+  id          String @id @default(cuid())
+  frameworkId String
+  name        String
+  description String?
+
+  // Relations
+  framework CareerFramework @relation(fields: [frameworkId], references: [id], onDelete: Cascade)
+  skills    Skill[]
+}
+
+model Skill {
+  id            String  @id @default(cuid())
+  competencyId  String
+  levelId       String
+  name          String
+  description   String?
+
+  // Relations
+  competency          Competency             @relation(fields: [competencyId], references: [id], onDelete: Cascade)
+  level               Level                  @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  assessmentResponses AssessmentResponse[]
+  skillMatrix         SkillMatrix[]
+}
+
+model Assessment {
+  id          String           @id @default(cuid())
+  frameworkId String
+  name        String
+  description String?
+  dueDate     DateTime?
+  status      AssessmentStatus @default(PENDING)
+  createdById String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Relations
+  framework   CareerFramework        @relation(fields: [frameworkId], references: [id], onDelete: Cascade)
+  createdBy   User                   @relation(fields: [createdById], references: [id])
+  assignments AssessmentAssignment[]
+}
+
+model AssessmentAssignment {
+  id                  String           @id @default(cuid())
+  assessmentId        String
+  agentId             String
+  managerId           String
+  status              AssessmentStatus @default(PENDING)
+  selfCompletedAt     DateTime?
+  managerCompletedAt  DateTime?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  // Relations
+  assessment Assessment             @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  agent      User                   @relation("AgentAssignments", fields: [agentId], references: [id])
+  manager    User                   @relation("ManagerAssignments", fields: [managerId], references: [id])
+  responses  AssessmentResponse[]
+}
+
+model AssessmentResponse {
+  id             String  @id @default(cuid())
+  assignmentId   String
+  skillId        String
+  selfRating     Int?
+  managerRating  Int?
+  selfComments   String?
+  managerComments String?
+
+  // Relations
+  assignment AssessmentAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  skill      Skill                @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([assignmentId, skillId])
+}
+
+model SkillMatrix {
+  id             String   @id @default(cuid())
+  userId         String
+  skillId        String
+  currentLevel   Int      @default(0)
+  targetLevel    Int?
+  lastAssessedAt DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, skillId])
+}
