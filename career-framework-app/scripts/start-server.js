@@ -194,6 +194,7 @@ async function main() {
     cwd: __dirname + '/..',
     env,
     stdio: 'inherit',
+    shell: true,  // Required for Windows to find npx
   });
 
   serverProcess.on('error', (error) => {
