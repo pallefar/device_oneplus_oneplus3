@@ -425,21 +425,26 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
+## Latest Features 🎉
+
+- [x] **AI-Powered Development Plans** - Automated, personalized development plans with timeline-based phases ✅
+- [x] **Skill Progression Tracking** - Visual charts showing skill evolution across multiple assessments ✅
+- [x] **Skill gap analysis visualization** - Comprehensive gap analysis with actionable insights ✅
+- [x] **Advanced analytics dashboard** - Organization and team-level dashboards with Recharts ✅
+- [x] **Historical skill progression charts** - Interactive progression tracking for employees ✅
+
 ## Future Enhancements
 
-- [x] Skill gap analysis visualization ✅
-- [x] Advanced analytics dashboard ✅
-- [x] Historical skill progression charts ✅
-- [ ] Automated development plan generation
 - [ ] Email notifications for pending assessments
-- [ ] Import assessments from Excel
+- [ ] Import assessments from Excel/CSV
 - [ ] Multi-language support
 - [ ] Mobile responsive improvements
 - [ ] Batch user import (CSV/Excel)
 - [ ] Custom skill rating scales
-- [ ] Two-way skill comparison (peer reviews)
+- [ ] Peer review system
 - [ ] Assessment templates library
 - [ ] Automated reminders for pending reviews
+- [ ] Integration with HR systems
 
 ## Support
 
