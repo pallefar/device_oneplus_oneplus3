@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { useToast } from '@/components/ui/Toast'
 import { Loading } from '@/components/ui/Loading'
 import { Save, CheckCircle } from 'lucide-react'
+import { DevelopmentPlan } from '@/components/features/DevelopmentPlan'
 
 interface Skill {
   id: string
@@ -179,11 +180,18 @@ export default function AgentAssessmentPage({ params }: { params: { id: string }
             )}
           </div>
           {isCompleted && (
-            <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-600" />
-              <span className="text-green-800 font-medium">
-                Assessment completed on {assignment.status === 'FINALIZED' ? 'both sides' : 'your side'}
-              </span>
+            <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span className="text-green-800 font-medium">
+                    Assessment completed on {assignment.status === 'FINALIZED' ? 'both sides' : 'your side'}
+                  </span>
+                </div>
+                {assignment.status === 'FINALIZED' && (
+                  <DevelopmentPlan assignmentId={params.id} />
+                )}
+              </div>
             </div>
           )}
         </div>

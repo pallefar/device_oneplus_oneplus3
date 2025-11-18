@@ -43,6 +43,12 @@ const navItems: NavItem[] = [
     roles: ['ADMIN', 'LEADER', 'AGENT'],
   },
   {
+    name: 'Progress',
+    href: '/progress',
+    icon: TrendingUp,
+    roles: ['AGENT'],
+  },
+  {
     name: 'Users',
     href: '/users',
     icon: Users,
