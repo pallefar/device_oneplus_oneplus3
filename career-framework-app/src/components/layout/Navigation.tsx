@@ -18,7 +18,8 @@ import {
   MessageCircle,
   Trophy,
   ThumbsUp,
-  Heart
+  Heart,
+  Calendar
 } from 'lucide-react'
 import { useState } from 'react'
 import { NotificationCenter } from '@/components/features/NotificationCenter'
@@ -83,6 +84,12 @@ const navItems: NavItem[] = [
     name: 'Kudos',
     href: '/kudos',
     icon: Heart,
+    roles: ['AGENT'],
+  },
+  {
+    name: 'Calendar',
+    href: '/calendar',
+    icon: Calendar,
     roles: ['AGENT'],
   },
   {
