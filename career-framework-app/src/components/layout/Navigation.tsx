@@ -13,7 +13,8 @@ import {
   Menu,
   X,
   Download,
-  BookOpen
+  BookOpen,
+  Settings
 } from 'lucide-react'
 import { useState } from 'react'
 import { NotificationCenter } from '@/components/features/NotificationCenter'
@@ -72,6 +73,12 @@ const navItems: NavItem[] = [
     name: 'Downloads',
     href: '/downloads',
     icon: Download,
+    roles: ['ADMIN'],
+  },
+  {
+    name: 'Settings',
+    href: '/settings',
+    icon: Settings,
     roles: ['ADMIN'],
   },
 ]
