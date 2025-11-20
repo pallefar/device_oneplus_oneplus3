@@ -19,13 +19,13 @@ interface CompanyInfo {
 
 // Professional color scheme
 const COLORS = {
-  primary: [54, 83, 186], // Blue
-  secondary: [119, 122, 140], // Gray
-  success: [72, 187, 120], // Green
-  warning: [245, 158, 11], // Orange
-  danger: [239, 68, 68], // Red
-  light: [243, 244, 246], // Light gray
-  dark: [31, 41, 55], // Dark gray
+  primary: [54, 83, 186] as [number, number, number], // Blue
+  secondary: [119, 122, 140] as [number, number, number], // Gray
+  success: [72, 187, 120] as [number, number, number], // Green
+  warning: [245, 158, 11] as [number, number, number], // Orange
+  danger: [239, 68, 68] as [number, number, number], // Red
+  light: [243, 244, 246] as [number, number, number], // Light gray
+  dark: [31, 41, 55] as [number, number, number], // Dark gray
 }
 
 function addHeader(doc: jsPDF, title: string, subtitle?: string, pageNum?: number, totalPages?: number) {
@@ -77,9 +77,9 @@ function addFooter(doc: jsPDF, yPos: number) {
   doc.setTextColor(0, 0, 0) // Reset
 }
 
-function getRatingColor(rating: number): number[] {
+function getRatingColor(rating: number): [number, number, number] {
   if (rating >= 4) return COLORS.success
-  if (rating >= 3) return [54, 83, 186] // Blue
+  if (rating >= 3) return [54, 83, 186] as [number, number, number] // Blue
   if (rating >= 2) return COLORS.warning
   return COLORS.danger
 }
@@ -196,7 +196,7 @@ export function exportEnhancedAssessmentToPDF(data: AssessmentData, companyInfo?
   }
 
   // Competency breakdown
-  const competencies = [...new Set(data.skills.map((s) => s.competency))]
+  const competencies = Array.from(new Set(data.skills.map((s) => s.competency)))
   yPos += 5
 
   doc.setFont('helvetica', 'bold')

@@ -108,21 +108,3 @@ export async function POST(request: Request) {
   }
 }
 
-// Utility function to get a setting value (for use in other APIs)
-export async function getSystemSetting(key: string): Promise<string | null> {
-  try {
-    const setting = await prisma.systemSettings.findUnique({
-      where: { key },
-    })
-
-    if (!setting || !setting.value) {
-      return null
-    }
-
-    // Decrypt if secret
-    return setting.isSecret ? decrypt(setting.value) : setting.value
-  } catch (error) {
-    console.error(`Failed to get setting ${key}:`, error)
-    return null
-  }
-}

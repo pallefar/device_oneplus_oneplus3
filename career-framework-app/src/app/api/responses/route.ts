@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { awardXP, checkAssessmentAchievements } from '@/lib/gamification'
 
 export async function POST(request: Request) {
   try {
@@ -74,6 +75,49 @@ export async function POST(request: Request) {
       where: { id: assignmentId },
       data: updateStatus,
     })
+
+    // Gamification: Award XP when assessment is finalized
+    if (type === 'manager') {
+      // Manager completed = assessment finalized
+      try {
+        await awardXP(
+          assignment.agentId,
+          75,
+          'Completed assessment',
+          'assessment',
+          { assignmentId }
+        )
+        await checkAssessmentAchievements(assignment.agentId)
+
+        // Create notification
+        await prisma.notification.create({
+          data: {
+            userId: assignment.agentId,
+            type: 'assessment_completed',
+            title: 'Assessment Completed!',
+            message: `Your assessment has been finalized. You earned 75 XP!`,
+            link: `/agent/progress`,
+          },
+        })
+      } catch (error) {
+        console.error('Error awarding XP for assessment:', error)
+        // Don't fail the request if gamification fails
+      }
+    } else if (type === 'self') {
+      // Self-assessment completed
+      try {
+        await awardXP(
+          assignment.agentId,
+          30,
+          'Completed self-assessment',
+          'assessment',
+          { assignmentId }
+        )
+        await checkAssessmentAchievements(assignment.agentId)
+      } catch (error) {
+        console.error('Error awarding XP for self-assessment:', error)
+      }
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { getSystemSetting } from '../../admin/settings/route'
+import { getSystemSetting } from '@/lib/settings'
 
 // Microsoft Graph OAuth
 export async function GET(request: Request) {
