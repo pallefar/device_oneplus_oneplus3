@@ -2,6 +2,7 @@ import { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { prisma } from './prisma'
 import bcrypt from 'bcryptjs'
+import { checkAndUnlockAchievement } from './gamification'
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -44,6 +45,13 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id
         token.role = (user as any).role
+
+        // Award first login achievement
+        try {
+          await checkAndUnlockAchievement(user.id, 'first_login')
+        } catch (error) {
+          console.error('Error checking first login achievement:', error)
+        }
       }
       return token
     },
