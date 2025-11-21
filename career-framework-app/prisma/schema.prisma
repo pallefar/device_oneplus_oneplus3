@@ -417,3 +417,18 @@ model Kudos {
 
   @@index([toUserId, createdAt])
 }
+
+// Succession planning
+model SuccessionPlan {
+  id              String   @id @default(cuid())
+  targetRole      String   // Role being planned for
+  candidateIds    String   // JSON array of user IDs
+  notes           String?  // Admin notes about the plan
+  timelineMonths  Int      // Expected timeline in months
+  status          String   @default("active") // "active", "completed", "cancelled"
+  createdBy       String   // Admin who created the plan
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([targetRole, status])
+}

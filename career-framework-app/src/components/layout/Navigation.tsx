@@ -20,7 +20,8 @@ import {
   ThumbsUp,
   Heart,
   Calendar,
-  BarChart3
+  BarChart3,
+  GitBranch
 } from 'lucide-react'
 import { useState } from 'react'
 import { NotificationCenter } from '@/components/features/NotificationCenter'
@@ -110,6 +111,12 @@ const navItems: NavItem[] = [
     href: '/analytics',
     icon: TrendingUp,
     roles: ['ADMIN', 'LEADER'],
+  },
+  {
+    name: 'Succession Planning',
+    href: '/succession-planning',
+    icon: GitBranch,
+    roles: ['ADMIN'],
   },
   {
     name: 'Downloads',
