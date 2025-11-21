@@ -19,7 +19,8 @@ import {
   Trophy,
   ThumbsUp,
   Heart,
-  Calendar
+  Calendar,
+  BarChart3
 } from 'lucide-react'
 import { useState } from 'react'
 import { NotificationCenter } from '@/components/features/NotificationCenter'
@@ -90,6 +91,12 @@ const navItems: NavItem[] = [
     name: 'Calendar',
     href: '/calendar',
     icon: Calendar,
+    roles: ['AGENT'],
+  },
+  {
+    name: 'My Analytics',
+    href: '/my-analytics',
+    icon: BarChart3,
     roles: ['AGENT'],
   },
   {
