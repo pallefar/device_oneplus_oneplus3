@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "Career Framework Management System",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
+    "start:full": "npm run setup && npm run dev",
+    "setup": "npm run prisma:generate && npm run prisma:push",
     "server": "node scripts/start-server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "next lint",
     "release": "node scripts/create-release.js",
-    "prisma:generate": "npx prisma generate",
+    "prisma:generate": "PRISMA_ENGINES_CHECKSUM_IGNORE_MISSING=1 npx prisma generate",
     "prisma:push": "npx prisma db push",
     "prisma:studio": "npx prisma studio",
     "prisma:seed": "node prisma/seed.js"
