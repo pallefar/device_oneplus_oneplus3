@@ -488,3 +488,162 @@ model CompensationRecommendation {
 
   @@index([userId, createdAt])
 }
+
+// Multi-language translations
+model Translation {
+  id          String   @id @default(cuid())
+  key         String   // Translation key (e.g., "dashboard.welcome")
+  language    String   // Language code (en, es, fr, de, zh, etc.)
+  value       String   // Translated text
+  category    String?  // Category for organization (ui, emails, notifications)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([key, language])
+  @@index([language])
+  @@index([category])
+}
+
+// Career path predictions (ML-powered)
+model CareerPathPrediction {
+  id                String   @id @default(cuid())
+  userId            String
+  targetRole        String
+  currentRole       String
+  successProbability Float   // 0-100
+  estimatedMonths   Int
+  requiredSkills    String   // JSON array of skills needed
+  skillGaps         String   // JSON array of missing skills with priorities
+  recommendations   String   // JSON array of actionable steps
+  confidenceScore   Float    // ML model confidence (0-100)
+  calculatedAt      DateTime @default(now())
+  expiresAt         DateTime // Predictions expire after 90 days
+
+  @@index([userId, calculatedAt])
+  @@index([targetRole])
+}
+
+// External learning platform connections
+model LMSConnection {
+  id              String   @id @default(cuid())
+  userId          String
+  platform        String   // "coursera", "udemy", "linkedin", "pluralsight"
+  accessToken     String?  // Encrypted OAuth token
+  refreshToken    String?  // Encrypted refresh token
+  externalUserId  String?  // User ID on external platform
+  isActive        Boolean  @default(true)
+  lastSyncedAt    DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, platform])
+  @@index([userId])
+}
+
+// Aggregated course data from LMS platforms
+model ExternalCourse {
+  id              String   @id @default(cuid())
+  platform        String   // "coursera", "udemy", etc.
+  externalId      String   // Course ID on platform
+  title           String
+  description     String?
+  instructors     String?  // JSON array
+  skillsTaught    String?  // JSON array
+  duration        Int?     // Minutes
+  difficulty      String?  // "beginner", "intermediate", "advanced"
+  rating          Float?
+  enrollmentCount Int?
+  price           Float?
+  currency        String   @default("USD")
+  url             String
+  thumbnailUrl    String?
+  lastUpdated     DateTime @default(now())
+
+  @@unique([platform, externalId])
+  @@index([platform])
+}
+
+// User course enrollments across platforms
+model CourseEnrollment {
+  id              String   @id @default(cuid())
+  userId          String
+  courseId        String   // References ExternalCourse
+  platform        String
+  status          String   @default("enrolled") // "enrolled", "in_progress", "completed"
+  progress        Int      @default(0) // 0-100
+  startedAt       DateTime @default(now())
+  completedAt     DateTime?
+  certificateUrl  String?
+  lastAccessedAt  DateTime?
+
+  @@index([userId, status])
+  @@index([courseId])
+}
+
+// Learning style preferences
+model LearningPreference {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  primaryStyle    String   // "visual", "auditory", "kinesthetic", "reading"
+  pace            String   @default("normal") // "slow", "normal", "fast"
+  sessionLength   Int      @default(30) // Preferred minutes per session
+  timeOfDay       String?  // "morning", "afternoon", "evening"
+  includeVideo    Boolean  @default(true)
+  includeText     Boolean  @default(true)
+  includeAudio    Boolean  @default(false)
+  includeInteractive Boolean @default(true)
+  neurodiversity  String?  // "adhd", "dyslexia", "autism", etc.
+  updatedAt       DateTime @updatedAt
+}
+
+// Study groups / learning communities
+model StudyGroup {
+  id              String   @id @default(cuid())
+  name            String
+  description     String?
+  skillFocus      String?  // Skill or topic
+  meetingSchedule String?  // iCal RRULE or description
+  maxMembers      Int      @default(10)
+  isPublic        Boolean  @default(true)
+  creatorId       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([skillFocus])
+  @@index([isPublic])
+}
+
+// Study group memberships
+model StudyGroupMember {
+  id          String   @id @default(cuid())
+  groupId     String
+  userId      String
+  role        String   @default("member") // "member", "moderator", "creator"
+  joinedAt    DateTime @default(now())
+  lastActiveAt DateTime @default(now())
+
+  @@unique([groupId, userId])
+  @@index([userId])
+}
+
+// Blockchain skill credentials (Web3)
+model BlockchainCredential {
+  id              String   @id @default(cuid())
+  userId          String
+  skillName       String
+  competency      String
+  level           Int      // 1-5
+  issuedBy        String   // Issuer name
+  blockchainType  String   @default("ethereum") // "ethereum", "polygon"
+  tokenId         String?  // NFT token ID
+  contractAddress String?  // Smart contract address
+  transactionHash String?  // Blockchain transaction hash
+  metadataUri     String?  // IPFS URI for metadata
+  isVerified      Boolean  @default(false)
+  issuedAt        DateTime @default(now())
+  expiresAt       DateTime?
+
+  @@index([userId])
+  @@index([skillName])
+  @@index([transactionHash])
+}

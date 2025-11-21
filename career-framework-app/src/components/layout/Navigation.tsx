@@ -23,6 +23,9 @@ import {
   BarChart3,
   GitBranch,
   DollarSign,
+  Target,
+  GraduationCap,
+  UsersRound,
 } from 'lucide-react'
 import { useState } from 'react'
 import { NotificationCenter } from '@/components/features/NotificationCenter'
@@ -105,6 +108,24 @@ const navItems: NavItem[] = [
     name: 'Skill Valuation',
     href: '/skill-valuation',
     icon: DollarSign,
+    roles: ['AGENT'],
+  },
+  {
+    name: 'Career Path',
+    href: '/career-path',
+    icon: Target,
+    roles: ['AGENT'],
+  },
+  {
+    name: 'Courses',
+    href: '/courses',
+    icon: GraduationCap,
+    roles: ['AGENT'],
+  },
+  {
+    name: 'Study Groups',
+    href: '/study-groups',
+    icon: UsersRound,
     roles: ['AGENT'],
   },
   {
