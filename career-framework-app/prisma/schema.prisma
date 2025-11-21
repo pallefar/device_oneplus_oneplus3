@@ -432,3 +432,59 @@ model SuccessionPlan {
 
   @@index([targetRole, status])
 }
+
+// Skills-based compensation
+model CompensationBenchmark {
+  id              String   @id @default(cuid())
+  skillName       String
+  competency      String?  // Competency category
+  level           Int?     // Skill level (1-5)
+  baseValue       Float    // Market value in USD
+  premiumPercent  Float    // Premium percentage (0-100)
+  marketDemand    Float    // Demand score (0-100)
+  location        String?  // Geographic location
+  industry        String?  // Industry vertical
+  source          String   // "linkedin", "glassdoor", "indeed", "payscale"
+  sampleSize      Int      @default(1) // Number of data points
+  lastUpdated     DateTime @default(now())
+  createdAt       DateTime @default(now())
+
+  @@index([skillName, level])
+  @@index([competency])
+}
+
+// Skill value analytics (aggregated, no individual salaries)
+model SkillValueAnalytics {
+  id                String   @id @default(cuid())
+  skillName         String
+  avgMarketValue    Float    // Average market value
+  minValue          Float    // Minimum market value
+  maxValue          Float    // Maximum market value
+  trend             String   // "rising", "stable", "declining"
+  demandIndex       Float    // 0-100
+  rarityScore       Float    // 0-100 (how rare is this skill)
+  usersWithSkill    Int      // Count of users with this skill
+  avgSkillLevel     Float    // Average proficiency level
+  topCompanies      String?  // JSON array of top companies
+  relatedSkills     String?  // JSON array of related skills
+  calculatedAt      DateTime @default(now())
+
+  @@unique([skillName])
+  @@index([avgMarketValue])
+}
+
+// Compensation recommendations (privacy-preserving)
+model CompensationRecommendation {
+  id              String   @id @default(cuid())
+  userId          String
+  skillSnapshot   String   // JSON of skills and levels at time of calculation
+  calculatedValue Float    // Estimated total value
+  marketPercentile Float   // Where user stands (0-100)
+  recommendations String   // JSON array of recommendations
+  potentialGain   Float    // Potential increase from skill development
+  topSkillGaps    String   // JSON array of high-value missing skills
+  createdAt       DateTime @default(now())
+  expiresAt       DateTime // Recommendations expire after 90 days
+
+  @@index([userId, createdAt])
+}

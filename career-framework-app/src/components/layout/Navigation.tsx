@@ -21,7 +21,8 @@ import {
   Heart,
   Calendar,
   BarChart3,
-  GitBranch
+  GitBranch,
+  DollarSign,
 } from 'lucide-react'
 import { useState } from 'react'
 import { NotificationCenter } from '@/components/features/NotificationCenter'
@@ -101,6 +102,12 @@ const navItems: NavItem[] = [
     roles: ['AGENT'],
   },
   {
+    name: 'Skill Valuation',
+    href: '/skill-valuation',
+    icon: DollarSign,
+    roles: ['AGENT'],
+  },
+  {
     name: 'Users',
     href: '/users',
     icon: Users,
@@ -116,6 +123,12 @@ const navItems: NavItem[] = [
     name: 'Succession Planning',
     href: '/succession-planning',
     icon: GitBranch,
+    roles: ['ADMIN'],
+  },
+  {
+    name: 'Compensation Analytics',
+    href: '/compensation-analytics',
+    icon: DollarSign,
     roles: ['ADMIN'],
   },
   {
